@@ -17,14 +17,15 @@ import pprint
 
 import nltk
 from nltk.util import ngrams
+
 import psycopg2
 import json
 from csv import writer
 
-# conn = psycopg2.connect(
-#     database="dcmemberselection", user='postgres', password='root', host='localhost', port='5432'
-# )
-# cur = conn.cursor()
+conn = psycopg2.connect(
+    database="cuic", user='postgres', password='rammv@123', host='localhost', port='5432'
+)
+cur = conn.cursor()
 
 def extract_ngrams(data, num):
     n_grams = ngrams(nltk.word_tokenize(data), num)
@@ -74,7 +75,7 @@ def personalised_pipeline(ed_df, ed_matrix, dtopic_matrix, topic_vec):
     return etop_matrix, dtop_matrix, G
 
 # give the path of dataset excel sheet
-wb_obj = openpyxl.load_workbook("")
+wb_obj = openpyxl.load_workbook("C:/Users/Ramanan/Downloads/july-rem.xlsx")
 
 sheet = wb_obj.active
 
@@ -103,16 +104,16 @@ for row in sheet.iter_rows(values_only=True):
     if i == 1:
         continue
     
-    if i>5:
+    if i>2:
         break
     try:
         app_gen_id = str(row[1]).replace(".0", "")
         name = row[2]
         title = row[3]
-        # print(f"Processing application id: {app_gen_id}...")
+        print(f"Processing application id: {app_gen_id}...")
 
 
-        # print("Extracting members information...")
+        print("Extracting members information...")
         dc_members = []
         dco_members = []
 
@@ -152,15 +153,15 @@ for row in sheet.iter_rows(values_only=True):
         dco3_college = row[27]
         dco3_special = row[33]
 
-        # print("Extracting text from publications pdf document...")
+        print("Extracting text from publications pdf document...")
         # doc_id, text
         doc_data = [
-            ["d1", convert_pdf_to_txt(f"./jul-22-files/{app_gen_id}_1.pdf")],
-            ["d2", convert_pdf_to_txt(f"./jul-22-files/{app_gen_id}_2.pdf")],
-            ["d3", convert_pdf_to_txt(f"./jul-22-files/{app_gen_id}_3.pdf")],
-            ["d4", convert_pdf_to_txt(f"./jul-22-files/{app_gen_id}_4.pdf")],
-            ["d5", convert_pdf_to_txt(f"./jul-22-files/{app_gen_id}_5.pdf")],
-            ["d6", convert_pdf_to_txt(f"./jul-22-files/{app_gen_id}_6.pdf")],
+            ["d1", convert_pdf_to_txt(f"C:/Users/Ramanan/Downloads/dcmemberjul22-ice/dcmemberjul22-ice/{app_gen_id}_1.pdf")],
+            ["d2", convert_pdf_to_txt(f"C:/Users/Ramanan/Downloads/dcmemberjul22-ice/dcmemberjul22-ice/{app_gen_id}_2.pdf")],
+            ["d3", convert_pdf_to_txt(f"C:/Users/Ramanan/Downloads/dcmemberjul22-ice/dcmemberjul22-ice/{app_gen_id}_3.pdf")],
+            ["d4", convert_pdf_to_txt(f"C:/Users/Ramanan/Downloads/dcmemberjul22-ice/dcmemberjul22-ice/{app_gen_id}_4.pdf")],
+            ["d5", convert_pdf_to_txt(f"C:/Users/Ramanan/Downloads/dcmemberjul22-ice/dcmemberjul22-ice/{app_gen_id}_5.pdf")],
+            ["d6", convert_pdf_to_txt(f"C:/Users/Ramanan/Downloads/dcmemberjul22-ice/dcmemberjul22-ice/{app_gen_id}_6.pdf")],
         ]
         doc_df = pd.DataFrame(doc_data, columns=["doc_id", "text"])
 
@@ -240,9 +241,9 @@ for row in sheet.iter_rows(values_only=True):
         #         dc_sorted[0]['member_id'], dco_sorted[0]['member_id']]
         
         # writer_object.writerow(LIST)
-        # cur.execute(f"INSERT INTO membersdata (app_gen_id, name, title, dc_members, dco_members) \
-        #             VALUES ('{app_gen_id}', '{name}', '{title}', \
-        #                 '{json.dumps(dc_sorted)}', '{json.dumps(dco_sorted)}')")
+        cur.execute(f"INSERT INTO membersdata (app_gen_id, name, title, dc_members, dco_members) \
+                    VALUES ('{app_gen_id}', '{name}', '{title}', \
+                        '{json.dumps(dc_sorted)}', '{json.dumps(dco_sorted)}')")
         
         print("count ->", i, ", generated ->", app_gen_id)
         # conn.commit()
@@ -250,9 +251,9 @@ for row in sheet.iter_rows(values_only=True):
         print(e)
 
     # print("#############################################################################################################################################")
-result_file_object.close()
+#result_file_object.close()
 
-# conn.commit()
-# conn.close()
+conn.commit()
+conn.close()
 
 

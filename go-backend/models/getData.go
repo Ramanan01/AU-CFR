@@ -18,15 +18,27 @@ func GetNextExpert(offset string) (Expert, error) {
 	}
 	defer db.Close()
 
+	// query := `
+	// 		SELECT
+	// 			id, 
+	// 			app_gen_id,
+	// 			name,
+	// 			title,
+	// 			dc_members,
+	// 			dco_members,
+	// 			selected_member
+	// 		FROM
+	// 			membersdata
+	// 		LIMIT 1
+	// 		OFFSET $1`
+
 	query := `
-			SELECT
-				id, 
+			SELECT 
 				app_gen_id,
 				name,
 				title,
 				dc_members,
-				dco_members,
-				selected_member
+				dco_members
 			FROM
 				membersdata
 			LIMIT 1
@@ -41,13 +53,13 @@ func GetNextExpert(offset string) (Expert, error) {
 	var selected_expert sql.NullString
 
 	err = db.QueryRow(query, offset).Scan(
-		&id,
+		//&id,
 		&app_gen_id,
 		&name,
 		&title,
 		&dc_members,
-		&dco_members,
-		&selected_expert)
+		&dco_members,)
+		//&selected_expert)
 
 	if err != nil && err != sql.ErrNoRows {
 		log.Println("GetNextExpert: failed -> ", err)

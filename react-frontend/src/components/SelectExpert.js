@@ -140,13 +140,14 @@ const SelectExpert = () => {
                             <button style={{ width: "100%", margin: 0, backgroundColor: "#0B7E88", color: "white", borderRadius: "5px" }} onClick={() => UpdateSelectExpert(expertData?.expert?.app_gen_id, selectedExpertMemberID)}>Select Expert</button>
                         </CCol>
                         <CCol xs={8}>
-                            {currentPdf &&
+                            {currentPdf ?
                                 // eslint-disable-next-line jsx-a11y/alt-text
                                 <object
                                     data={currentPdf}
                                     type="application/pdf"
                                     style={{ width: "98%", height: "85vh" }}
-                                ></object>}
+                                ></object> 
+                                : <div> helloo </div> }
                         </CCol>
                     </CRow>
                 </div>
