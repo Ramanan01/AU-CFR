@@ -22,7 +22,7 @@ import AuthVerify from "./common/AuthVerify";
 import EventBus from "./common/EventBus";
 import axios from "axios";
 
-const API_URL = "http://localhost:9000/";
+const API_URL = "http://localhost:5000/";
 
 const App = () => {
   const [showExpertSelectionPage, setShowExpertSelectionPage] = useState(false);
@@ -152,7 +152,7 @@ const App = () => {
                     </Link>
               </li>
               <li className="nav-item">
-                <Link to={"/profile"} className="nav-link" style={{ color:"white" }}>
+                <Link to={"/profile"} className="nav-link" style={{ color:"white", textTransform: "capitalize" }}>
                   {currentUser.name}
                 </Link>
               </li>

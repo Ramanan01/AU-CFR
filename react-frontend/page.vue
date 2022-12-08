@@ -160,7 +160,7 @@ import "vue-slick-carousel/dist/vue-slick-carousel.css";
 import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 import axios from "axios";
 
-const baseUrl = "http://localhost:9000/api/expert/next?offset=0"
+const baseUrl = "http://localhost:5000/api/expert/next?offset=0"
 
 export default {
   name: "App",

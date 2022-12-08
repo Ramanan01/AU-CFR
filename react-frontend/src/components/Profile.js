@@ -16,10 +16,10 @@ const Profile = () => {
           <strong>{currentUser.username}</strong> Profile
         </h3>
       </header>
-      <p>
+      {/* <p>
         <strong>Token:</strong> {currentUser.tokenString.substring(0, 20)} ...{" "}
         {currentUser.tokenString.substr(currentUser.tokenString.length - 20)}
-      </p>
+      </p> */}
       <p>
         <strong>Id:</strong> {currentUser.id}
       </p>

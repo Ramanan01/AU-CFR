@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import axios from "axios";
 
 import { CRow, CWidgetStatsB, CCol } from '@coreui/react';
-const API_URL = "http://localhost:9000/";
+const API_URL = "http://localhost:5000/";
 
 const ShowStats = () => {
 

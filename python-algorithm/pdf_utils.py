@@ -9,7 +9,11 @@ def convert_pdf_to_txt(path):
     retstr = StringIO()
     laparams = LAParams()
     device = TextConverter(rsrcmgr, retstr, laparams=laparams)
-    fp = open(path, 'rb')
+    try:
+        fp = open(path, 'rb')
+    except:
+        print('Skipping', path)
+        return ""
     interpreter = PDFPageInterpreter(rsrcmgr, device)
     password = ""
     maxpages = 0
